@@ -5,7 +5,56 @@
     <resultMap id="Address" type="address">
         <id column="address_id" property="addressId" />
         <result column="address_name" property="addressName" />
+        <result column="address_created_time" property="addressCreatedTime" />
         <result column="address_flag" property="addressFlag" />
     </resultMap>
+
+    <select id="getAddressList" parameterType="page" resultMap="Address">
+        select * from address
+        where address_flag = 1
+        <if test="params != null">
+            <if test="params.addressName != null and params.addressName != ''">
+                and address_name like '%${params.addressName}%'
+            </if>
+        </if>
+        order by address_created_time desc
+        limit #{index}, #{currentCount}
+    </select>
+
+    <select id="getAddressCount" parameterType="page" resultType="Integer">
+        select count(*) from address
+        where address_flag = 1
+        <if test="params != null">
+            <if test="params.addressName != null and params.addressName != ''">
+                and address_name like '%${params.addressName}%'
+            </if>
+        </if>
+    </select>
+
+    <insert id="addAddress" parameterType="address">
+        insert into address values
+        (
+          #{addressId}, #{addressName},
+          #{addressCreatedTime}, #{addressFlag}
+        )
+    </insert>
+
+    <update id="editAddress" parameterType="address">
+        update address set
+        address_name = #{addressName}
+        where address_id = #{addressId}
+    </update>
+
+    <update id="deleteAddressById">
+        update address set
+        address_flag = 2
+        where address_id = #{values }
+    </update>
+
+    <select id="getAddressById" resultMap="Address">
+        select * from address
+        where address_flag = 1
+        and address_id = #{value}
+    </select>
 
 </mapper>

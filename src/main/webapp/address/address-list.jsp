@@ -46,7 +46,8 @@
                     <div class="layui-form-item" style="display: inline-block;">
                         <label class="layui-form-label xbs768">地址</label>
                         <div class="layui-input-inline xbs768">
-                            <input class="layui-input" name="params[addressName]" value="${page.params.addressName}" placeholder="水果名" id="LAY_demorange_s">
+                            <input class="layui-input" name="params[addressName]" value="${page.params.addressName}"
+                                   placeholder="水果名" id="LAY_demorange_s">
                         </div>
                         <div class="layui-input-inline" style="width:80px">
                             <button class="layui-btn" type="submit"><i
@@ -69,49 +70,35 @@
                     <th>
                     </th>
                     <th>编号</th>
-                    <th>水果名</th>
-                    <th>上架时间</th>
-                    <th>进货员工</th>
-                    <th>库存</th>
-                    <th>单价</th>
+                    <th>地址</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <form id="deleteForm" action="${pageContext.request.contextPath}/api/address/deleteAddress.html"
                       method="post">
-                    <%--<c:forEach items="${page.list}" var="fruit" varStatus="index">
+                    <c:forEach items="${page.list}" var="address" varStatus="index">
 
                         <tr>
-                            <td><input type="checkbox" name="ids" value="${fruit.fruitId}">
+                            <td><input type="checkbox" name="ids" value="${address.addressId}">
                             </td>
                             <td>${index.index+1}</td>
-                            <td>${fruit.fruitName}</td>
-                            <td>${fruit.fruitCreatedTime}</td>
-                            <td>${fruit.staff.staffName}</td>
-                            <td>${fruit.fruitNum}
-                            </td>
-                            <td>${fruit.fruitPrice}</td>
+                            <td>${address.addressName}</td>
 
                             <td class="td-manage">
 
-                                <a title="编辑" href="javascript:;" onclick="toEdit('${fruit.fruitId}')"
+                                <a title="编辑" href="javascript:;" onclick="toEditAddress('${address.addressId}')"
                                    class="ml-5" style="text-decoration:none">
                                     <i class="layui-icon">&#xe642;</i>
                                 </a>
 
-                                <a title="删除" href="javascript:;" onclick="deleteFruit('${fruit.fruitId}')"
+                                <a title="删除" href="javascript:;" onclick="deleteAddress('${address.addressId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe640;</i>
                                 </a>
-
-                                <a title="进货" href="javascript:;" onclick="addNum('${fruit.fruitId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe608;</i>
-                                </a>
                             </td>
                         </tr>
-                    </c:forEach>--%>
+                    </c:forEach>
                 </form>
                 </tbody>
             </table>
@@ -164,14 +151,15 @@
                         </c:if>
                     </ul>
                     </span>
-                        </div>
                     </ul>
+
                 </nav>
             </div>
-            <!-- 右侧内容框架，更改从这里结束 -->
         </div>
+        <!-- 右侧内容框架，更改从这里结束 -->
     </div>
-    <!-- 右侧主体结束 -->
+</div>
+<!-- 右侧主体结束 -->
 </div>
 <!-- 中部结束 -->
 <!-- 底部开始 -->
@@ -183,6 +171,26 @@
 <jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
+<script type="text/javascript">
 
+    function toEditAddress(id) {
+        layer.confirm('确认要编辑吗？', function (index) {
+            window.location.href = "${pageContext.request.contextPath}/api/address/toEdit" + id + ".html"
+        });
+    }
+
+    function deleteAddress(id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            window.location.href = "${pageContext.request.contextPath}/api/address/deleteAddress" + id + ".html"
+        });
+    }
+
+    function delAll() {
+        layer.confirm('确认要删除吗？', function (index) {
+            $('#deleteForm').submit();
+        });
+    }
+
+</script>
 </body>
 </html>
