@@ -22,6 +22,7 @@ public class Staff implements Serializable {
     private String staffId;
     private String staffName;
     private String staffAccount;
+    private String staffPassword;
     private String staffBirth;
     private Integer staffSex;
     private Integer staffAge;
@@ -51,6 +52,14 @@ public class Staff implements Serializable {
 
     public void setStaffAccount(String staffAccount) {
         this.staffAccount = staffAccount;
+    }
+
+    public String getStaffPassword() {
+        return staffPassword;
+    }
+
+    public void setStaffPassword(String staffPassword) {
+        this.staffPassword = staffPassword;
     }
 
     public String getStaffBirth() {

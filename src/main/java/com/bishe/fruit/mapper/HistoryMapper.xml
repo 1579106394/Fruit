@@ -14,4 +14,18 @@
         </association>
     </resultMap>
 
+    <insert id="addHistory" parameterType="history">
+        insert into history values
+        (
+          #{historyId}, #{historyCreatedTime}, #{historyPrice},
+          #{action.actionId}, #{historyFlag}, #{historyDelete}
+        )
+    </insert>
+
+    <update id="pay">
+        update history set
+        history_price = history_price - #{value}
+        where history_id = 'admin'
+    </update>
+
 </mapper>

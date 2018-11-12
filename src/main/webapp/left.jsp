@@ -17,53 +17,30 @@
                 <li class="list">
                     <a href="javascript:;">
                         <i class="iconfont">&#xe70b;</i>
-                        会员管理
+                        水果管理
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a href="member-list.html">
+                            <a href="${pageContext.request.contextPath}/api/fruit/fruitList.html">
                                 <i class="iconfont">&#xe6a7;</i>
-                                会员列表
+                                水果列表
                             </a>
                         </li>
-                        <li>
-                            <a href="member-del.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                会员删除
-                            </a>
-                        </li>
-                        <li>
-                            <a href="member-level.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                等级管理
-                            </a>
-                        </li>
-                        <li>
-                            <a href="member-kiss.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                积分管理
-                            </a>
-                        </li>
-                        <li>
-                            <a href="member-view.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                浏览记录
-                            </a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="list" >
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a3;</i>
-                        分类管理
+                        外送管理
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a href="./category.html">
+                            <a href="${pageContext.request.contextPath}/api/address/addressList.html">
                                 <i class="iconfont">&#xe6a7;</i>
-                                分类列表
+                                外送列表
                             </a>
                         </li>
                     </ul>

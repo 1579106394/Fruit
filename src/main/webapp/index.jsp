@@ -7,14 +7,13 @@
     <meta charset="UTF-8">
     <title>后台登录-X-admin1.1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/xadmin.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/xadmin.js"></script>
 
 </head>
 <body>
@@ -30,10 +29,10 @@
     <div class="page-content">
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
-            <blockquote class="layui-elem-quote">
+            <blockquote class="layui-elem-quote" style="color: #666666;">
                 注意：x-admin 1.1每个页面都可以独立设置一个背景主题，如果每个都设置会比较消耗本地的存储，如果想全部恢复，请重置。
             </blockquote>
-            <blockquote class="layui-elem-quote">
+            <blockquote class="layui-elem-quote" style="color: #666666;">
                 欢迎使用x-admin 后台模版！<span class="f-14">v1.0</span>官方交流群： 519492808
             </blockquote>
             <fieldset class="layui-elem-field layui-field-title site-title">

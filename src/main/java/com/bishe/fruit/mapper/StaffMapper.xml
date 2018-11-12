@@ -15,4 +15,26 @@
         <result column="staff_flag" property="staffFlag"/>
     </resultMap>
 
+    <select id="getStaffByStaffAccount" parameterType="staff" resultMap="Staff">
+        select * from staff
+        where staff_flag = 1
+        and staff_account = #{staffAccount}
+    </select>
+
+    <select id="getStaffByTelephone" resultMap="Staff">
+        select * from staff
+        where staff_flag = 1
+        and staff_telephone = #{value}
+    </select>
+
+    <insert id="addStaff" parameterType="staff">
+        insert into staff values
+        (
+          #{staffId}, #{staffName}, #{staffAccount},
+          #{staffPassword}, #{staffBirth}, #{staffSex},
+          #{staffAge}, #{staffTelephone}, #{staffRole},
+          #{staffFlag}
+        )
+    </insert>
+
 </mapper>
