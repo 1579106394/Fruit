@@ -38,14 +38,14 @@ public class FruitServiceImpl implements FruitService {
         Double totalPrice = fruit.getFruitPrice() * fruit.getFruitNum() * 0.8;
         historyMapper.pay(totalPrice);
 
-        History history = HistoryUtils.newHistory(totalPrice, "进货", 1);
+        History history = HistoryUtils.newHistory(totalPrice, "购入" + fruit.getFruitNum() + "kg" + fruit.getFruitName(), 1);
         historyMapper.addHistory(history);
 
     }
 
     @Override
     public Page<Fruit> getFruitList(Page<Fruit> p) {
-        if(p.getCurrentPage() == null) {
+        if (p.getCurrentPage() == null) {
             p.setCurrentPage(1);
         }
 
@@ -65,7 +65,7 @@ public class FruitServiceImpl implements FruitService {
         Integer totalCount = fruitMapper.getFruitCount(p);
         p.setTotalCount(totalCount);
 
-        Integer totalPage = (int)Math.ceil(totalCount * 1.0 / currentCount);
+        Integer totalPage = (int) Math.ceil(totalCount * 1.0 / currentCount);
         p.setTotalPage(totalPage);
 
         return p;
@@ -88,16 +88,21 @@ public class FruitServiceImpl implements FruitService {
         fruit.setFruitCreatedTime(DateUtils.newDate());
 
         //如果数量不为空，就增加这个数量
-        if(fruit.getFruitNum() != null) {
+        if (fruit.getFruitNum() != null) {
             Double totalPrice = f.getFruitPrice() * fruit.getFruitNum() * 0.8;
             historyMapper.pay(totalPrice);
-            History history = HistoryUtils.newHistory(totalPrice, "进货", 1);
+            History history = HistoryUtils.newHistory(totalPrice, "购入" + fruit.getFruitNum() + "kg" + fruit.getFruitName(), 1);
             historyMapper.addHistory(history);
 
             fruit.setFruitNum(f.getFruitNum() + fruit.getFruitNum());
         }
 
         fruitMapper.editFruit(fruit);
+    }
+
+    @Override
+    public Fruit getFruitFromCartByFruitId(Fruit fruit) {
+        return fruitMapper.getFruitFromCartByFruitId(fruit);
     }
 
 }

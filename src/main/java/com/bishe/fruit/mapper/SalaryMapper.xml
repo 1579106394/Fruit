@@ -21,4 +21,19 @@
         </association>
     </resultMap>
 
+    <insert id="addSalary" parameterType="salary">
+        insert into salary values
+        (
+          #{salaryId}, #{staff.staffId},
+          #{salaryTime}, #{salaryPrice},
+          #{salaryFlag}
+        )
+    </insert>
+
+    <update id="editSalary" parameterType="salary">
+        update salary set
+        salary_price = #{salaryPrice}
+        where salary_staff = #{staff.staffId}
+    </update>
+
 </mapper>

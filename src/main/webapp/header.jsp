@@ -16,11 +16,9 @@
     <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;" style="color: white;">admin</a>
+            <a href="javascript:;" style="color: white;">${sessionScope.staff.staffName}</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                <dd><a href="">个人信息</a></dd>
-                <dd><a href="">切换帐号</a></dd>
-                <dd><a href="./login.html">退出</a></dd>
+                <dd><a href="${pageContext.request.contextPath}/logout.html">退出</a></dd>
             </dl>
         </li>
     </ul>

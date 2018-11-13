@@ -1,14 +1,20 @@
 package com.bishe.fruit.controller;
 
 import com.bishe.fruit.pojo.Address;
+import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.service.AddressService;
 import com.bishe.fruit.utils.Page;
+import com.bishe.fruit.utils.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("api/address/")
@@ -84,6 +90,16 @@ public class AddressController {
         Address address = addressService.getAddressById(addressId);
         model.addAttribute("address", address);
         return "address/address-edit";
+    }
+
+    /**
+     * 根据员工id获取收货地址
+     */
+    @RequestMapping("getAddressByStaff.action")
+    @ResponseBody
+    public Result getAddressByStaff(@RequestBody Staff staff) {
+        List<Address> addressList = addressService.getAddressListByStaff(staff);
+        return Result.ok(addressList);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.bishe.fruit.utils;
 
-import com.bishe.fruit.pojo.Action;
 import com.bishe.fruit.pojo.History;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +25,7 @@ public class HistoryUtils {
 
         history.setHistoryPrice(price);
 
-        Action action = new Action();
-        action.setActionId(actionName);
-        action.setActionName(actionName);
-
-        history.setAction(action);
+        history.setHistoryAction(actionName);
 
         history.setHistoryFlag(flag);
 

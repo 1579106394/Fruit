@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>编辑水果</title>
+    <title>分配外送地址</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/xadmin.css">
@@ -29,34 +29,30 @@
     <div class="page-content">
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
-            <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/api/fruit/editFruit.html" method="post">
-                <input type="hidden" name="staff.staffId" value="${sessionScope.staff.staffId}"/>
-                <input type="hidden" name="fruitId" value="${fruit.fruitId}">
+            <form class="layui-form layui-form-pane"
+                  action="${pageContext.request.contextPath}/api/staff/addAddress.html"
+                  method="post">
+
+                <input type="hidden" name="staffId" value="${staff.staffId}"/>
+
                 <div class="layui-form-item">
-                    <label for="L_fruit_name" class="layui-form-label">
-                        水果名
+                    <label class="layui-form-label">
+                        外送列表
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="L_fruit_name" value="${fruit.fruitName}" name="fruitName" required=""
-                               autocomplete="off" class="layui-input">
+                        <c:forEach items="${addressList}" var="address">
+                            <input type="checkbox" name="ids" value="${address.addressId}" lay-skin="primary" title="${address.addressName}">
+                        </c:forEach>
+
                     </div>
 
                 </div>
-                <div class="layui-form-item">
-                    <label for="L_fruit_price" class="layui-form-label">
-                        单价
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="L_fruit_price" value="${fruit.fruitPrice}" name="fruitPrice" required=""
-                               autocomplete="off" class="layui-input">
-                    </div>
 
-                </div>
 
                 <div class="layui-form-item">
                     </label>
                     <button class="layui-btn" type="submit">
-                        编辑
+                        分配
                     </button>
                 </div>
             </form>
@@ -75,6 +71,16 @@
 <jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
+<script>
+    //执行一个laydate实例
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#birthday', //指定元素
+            format: 'yyyy年MM月dd日'
+        });
+    });
 
+</script>
 </body>
 </html>

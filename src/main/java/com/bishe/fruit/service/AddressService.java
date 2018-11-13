@@ -1,7 +1,10 @@
 package com.bishe.fruit.service;
 
 import com.bishe.fruit.pojo.Address;
+import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.utils.Page;
+
+import java.util.List;
 
 public interface AddressService {
 
@@ -19,4 +22,13 @@ public interface AddressService {
 
     // 根据id获取收货地址
     Address getAddressById(String addressId);
+
+    // 获取全部的送货地址
+    List<Address> getAllAddressList();
+
+    // 为员工分配送货地址
+    void addAddressForStaff(String staffId, String[] ids);
+
+    // 根据员工获取被分配的外送地址
+    List<Address> getAddressListByStaff(Staff staff);
 }

@@ -3,10 +3,10 @@
 <mapper namespace="com.bishe.fruit.mapper.AddressMapper">
 
     <resultMap id="Address" type="address">
-        <id column="address_id" property="addressId" />
-        <result column="address_name" property="addressName" />
-        <result column="address_created_time" property="addressCreatedTime" />
-        <result column="address_flag" property="addressFlag" />
+        <id column="address_id" property="addressId"/>
+        <result column="address_name" property="addressName"/>
+        <result column="address_created_time" property="addressCreatedTime"/>
+        <result column="address_flag" property="addressFlag"/>
     </resultMap>
 
     <select id="getAddressList" parameterType="page" resultMap="Address">
@@ -55,6 +55,27 @@
         select * from address
         where address_flag = 1
         and address_id = #{value}
+    </select>
+
+    <select id="getAllAddressList" resultMap="Address">
+        select * from address
+        where address_flag = 1
+    </select>
+
+
+    <insert id="addStaffAddress" parameterType="map">
+        insert into staff_address values
+        (
+          #{staffAddId}, #{staffId}, #{addressId}
+        )
+    </insert>
+
+    <select id="getAddressListByStaff" parameterType="staff" resultMap="Address">
+        select * from address a INNER JOIN
+        staff_address sa
+        on a.address_id = sa.address_id
+        WHERE a.address_flag = 1
+        and sa.staff_id = #{staffId}
     </select>
 
 </mapper>

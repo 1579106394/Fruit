@@ -1,9 +1,11 @@
 package com.bishe.fruit.mapper;
 
 import com.bishe.fruit.pojo.Address;
+import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.utils.Page;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AddressMapper {
 
@@ -24,4 +26,13 @@ public interface AddressMapper {
 
     // 根据id获取送货地址
     Address getAddressById(String addressId);
+
+    // 获取所有的送货地址
+    List<Address> getAllAddressList();
+
+    // 分配送货地址
+    void addStaffAddress(Map<String,Object> map);
+
+    // 根据员工获取外送地址
+    List<Address> getAddressListByStaff(Staff staff);
 }

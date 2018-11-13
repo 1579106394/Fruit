@@ -2,6 +2,7 @@ package com.bishe.fruit.service.impl;
 
 import com.bishe.fruit.mapper.AddressMapper;
 import com.bishe.fruit.pojo.Address;
+import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.service.AddressService;
 import com.bishe.fruit.utils.DateUtils;
 import com.bishe.fruit.utils.Page;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -70,6 +73,27 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address getAddressById(String addressId) {
         return addressMapper.getAddressById(addressId);
+    }
+
+    @Override
+    public List<Address> getAllAddressList() {
+        return addressMapper.getAllAddressList();
+    }
+
+    @Override
+    public void addAddressForStaff(String staffId, String[] ids) {
+        Map<String, Object> map = new HashMap<>();
+        for (String id : ids) {
+            map.put("staffAddId", UUID.randomUUID().toString());
+            map.put("staffId", staffId);
+            map.put("addressId", id);
+            addressMapper.addStaffAddress(map);
+        }
+    }
+
+    @Override
+    public List<Address> getAddressListByStaff(Staff staff) {
+        return addressMapper.getAddressListByStaff(staff);
     }
 
 }

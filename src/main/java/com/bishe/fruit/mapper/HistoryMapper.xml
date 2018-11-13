@@ -8,17 +8,13 @@
         <result column="history_price" property="historyPrice" />
         <result column="history_flag" property="historyFlag" />
         <result column="history_delete" property="historyDelete" />
-        <association property="action" javaType="action">
-            <id column="action_id" property="actionId" />
-            <result column="action_name" property="actionName" />
-        </association>
     </resultMap>
 
     <insert id="addHistory" parameterType="history">
         insert into history values
         (
           #{historyId}, #{historyCreatedTime}, #{historyPrice},
-          #{action.actionId}, #{historyFlag}, #{historyDelete}
+          #{action.actionName}, #{historyFlag}, #{historyDelete}
         )
     </insert>
 
@@ -27,5 +23,36 @@
         history_price = history_price - #{value}
         where history_id = 'admin'
     </update>
+
+    <select id="getHistoryList" parameterType="page" resultMap="History">
+        select * from history
+        where history_flag = #{params.historyFlag}
+        and history_delete = 1
+        and history_id != 'admin'
+        order by history_created_time desc
+        limit #{index}, #{currentCount}
+    </select>
+
+    <select id="getHistoryCount" parameterType="page" resultType="Integer">
+        select count(*) from history
+        where history_flag = #{params.historyFlag}
+        and history_delete = 1
+    </select>
+
+    <update id="deleteHistoryById">
+        update history set
+        history_delete = 2
+        where history_id = #{value}
+    </update>
+
+    <select id="getHistoryById" resultMap="History">
+        select * from history
+        where history_id = #{value}
+    </select>
+
+    <select id="getAdminPrice" resultType="Double">
+        select history_price from history
+        where history_id = 'admin'
+    </select>
 
 </mapper>

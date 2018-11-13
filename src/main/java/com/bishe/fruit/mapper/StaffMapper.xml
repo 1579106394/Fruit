@@ -13,6 +13,18 @@
         <result column="staff_telephone" property="staffTelephone"/>
         <result column="staff_role" property="staffRole"/>
         <result column="staff_flag" property="staffFlag"/>
+        <association property="salary" javaType="salary">
+            <id column="salary_id" property="salaryId"/>
+            <result column="salary_time" property="salaryTime" />
+            <result column="salary_price" property="salaryPrice" />
+            <result column="salary_flag" property="salaryFlag" />
+        </association>
+        <collection property="addressList" ofType="address">
+            <id column="address_id" property="addressId" />
+            <result column="address_name" property="addressName" />
+            <result column="address_created_time" property="addressCreatedTime" />
+            <result column="address_flag" property="addressFlag" />
+        </collection>
     </resultMap>
 
     <select id="getStaffByStaffAccount" parameterType="staff" resultMap="Staff">
@@ -36,5 +48,80 @@
           #{staffFlag}
         )
     </insert>
+
+    <select id="getStaffList" parameterType="Page" resultMap="Staff">
+        select * from staff left join salary
+        on staff_id = salary_staff
+        left JOIN staff_address
+        on  staff_address.staff_id = staff.staff_id
+        LEFT JOIN address
+        on address.address_id = staff_address.address_id
+        where staff_flag = 1
+        <if test="params != null">
+            <if test="params.staffName != null and params.staffName != ''">
+                and staff_name like '%${params.staffName}%'
+            </if>
+            <if test="params.staffRole != null and params.staffRole != ''">
+                and staff_role = #{params.staffRole}
+            </if>
+        </if>
+        limit #{index}, #{currentCount}
+    </select>
+
+    <select id="getStaffCount" parameterType="Page" resultType="Integer">
+        select count(*) from staff left join salary
+        on staff_id = salary_staff
+        where staff_flag = 1
+        <if test="params != null">
+            <if test="params.staffName != null and params.staffName != ''">
+                and staff_name like '%${params.staffName}%'
+            </if>
+            <if test="params.staffRole != null and params.staffRole != ''">
+                and staff_role = #{params.staffRole}
+            </if>
+        </if>
+    </select>
+
+    <select id="editStaff" parameterType="Staff">
+        update staff set
+        staff_name = #{staffName},
+        staff_account = #{staffAccount},
+        staff_password = #{staffPassword},
+        staff_birth = #{staffBirth},
+        staff_sex = #{staffSex},
+        staff_age = #{staffAge},
+        staff_telephone = #{staffTelephone}
+        where staff_id = #{staffId}
+    </select>
+
+    <update id="deleteStaffById">
+        update staff set
+        staff_flag = 2
+        where staff_id = #{staffId}
+    </update>
+
+    <select id="getStaffById" resultMap="Staff">
+        select * from staff left join salary
+        on staff_id = salary_staff
+        where staff_id = #{value}
+    </select>
+
+    <update id="editStaffRole" parameterType="Staff">
+        update staff set
+        <if test="staffRole == 1">
+            staff_role = 3
+        </if>
+        <if test="staffRole == 3">
+            staff_role = 1
+        </if>
+        where staff_id = #{staffId}
+    </update>
+
+    <select id="getAllStaff" resultMap="Staff">
+        select * from staff left join salary
+        on staff_id = salary_staff
+        where staff_flag = 1
+        and staff_role != 2
+    </select>
 
 </mapper>

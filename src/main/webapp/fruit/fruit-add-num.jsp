@@ -32,6 +32,7 @@
             <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/api/fruit/editFruit.html" method="post">
                 <input type="hidden" name="staff.staffId" value="${sessionScope.staff.staffId}"/>
                 <input type="hidden" name="fruitId" value="${fruit.fruitId}">
+                <input type="hidden" name="fruitName" value="${fruit.fruitName}">
 
                 <div class="layui-form-item">
                     <label for="L_fruit_num" class="layui-form-label">

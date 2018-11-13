@@ -19,6 +19,7 @@ public class Order implements Serializable {
     private String orderId;
     private String orderCreatedTime;
     private Staff staff;
+    private Staff courier;
     private Double orderPrice;
     private Address address;
     private Integer orderFlag;
@@ -46,6 +47,14 @@ public class Order implements Serializable {
 
     public void setStaff(Staff staff) {
         this.staff = staff;
+    }
+
+    public Staff getCourier() {
+        return courier;
+    }
+
+    public void setCourier(Staff courier) {
+        this.courier = courier;
     }
 
     public Double getOrderPrice() {

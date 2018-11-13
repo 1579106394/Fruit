@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>水果列表</title>
+    <title>购物车列表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/xadmin.css">
@@ -43,25 +43,15 @@
                   action="${pageContext.request.contextPath}/api/fruit/fruitList.html" method="post">
                 <input type="hidden" id="currentPage" name="currentPage" value="${page.currentPage}"/>
                 <div class="" style="text-align: center;">
-                    <div class="layui-form-item" style="display: inline-block;">
-                        <label class="layui-form-label xbs768">水果名</label>
-                        <div class="layui-input-inline xbs768">
-                            <input class="layui-input" name="params[fruitName]" value="${page.params.fruitName}"
-                                   placeholder="水果名" id="LAY_demorange_s">
-                        </div>
-                        <div class="layui-input-inline" style="width:80px">
-                            <button class="layui-btn" type="submit"><i
-                                    class="layui-icon">&#xe615;</i></button>
-                        </div>
-                    </div>
+
                 </div>
             </form>
 
             <xblock>
-                <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+                <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量移出
                 </button>
-                <a class="layui-btn" href="${pageContext.request.contextPath}/fruit/fruit-add.jsp"><i
-                        class="layui-icon">&#xe608;</i>添加
+                <a class="layui-btn" href="${pageContext.request.contextPath}/api/order/toAddOrder.html"><i
+                        class="layui-icon">&#xe608;</i>提交订单
                 </a>
                 <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
             <table class="layui-table">
@@ -96,83 +86,18 @@
 
                             <td class="td-manage">
 
-                                <a title="编辑" href="javascript:;" onclick="toEdit('${fruit.fruitId}')"
-                                   class="ml-5" style="text-decoration:none">
-                                    <i class="layui-icon">&#xe642;</i>
-                                </a>
-
-                                <a title="删除" href="javascript:;" onclick="deleteFruit('${fruit.fruitId}')"
+                                <a title="移出购物车" href="javascript:;" onclick="deleteFruit('${fruit.fruitId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe640;</i>
                                 </a>
 
-                                <a title="进货" href="javascript:;" onclick="addNum('${fruit.fruitId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe608;</i>
-                                </a>
-
-                                <a title="加入购物车" href="javascript:;" onclick="addCart('${fruit.fruitId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe698;</i>
-                                </a>
                             </td>
                         </tr>
                     </c:forEach>
                 </form>
                 </tbody>
             </table>
-            <div style="float: right;">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <c:if test="${page.currentPage == 1}">
-                            <li>
-                                <a class="disabled" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                        <c:if test="${page.currentPage != 1}">
-                            <li>
-                                <a href="javascript:void(0)" onclick="list(${page.currentPage - 1})"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
 
-                        <c:forEach begin="1" end="${page.totalPage}" var="p">
-                            <c:if test="${p == page.currentPage}">
-                                <li class="active">
-                                    <a href="javascript:void(0)">${p}</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${p != page.currentPage}">
-                                <li>
-                                    <a href="javascript:void(0)" onclick="list(${p})">${p}</a>
-                                </li>
-                            </c:if>
-                        </c:forEach>
-
-                        <c:if test="${page.currentPage == page.totalPage}">
-                            <li class="disabled">
-                                <a aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                        <c:if test="${page.currentPage != page.totalPage}">
-                            <li>
-                                <a href="javascript:void(0)" onclick="list(${page.currentPage + 1})"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                    </ul>
-                    </span>
-                    </ul>
-                </nav>
-            </div>
         </div>
         <!-- 右侧内容框架，更改从这里结束 -->
     </div>

@@ -84,4 +84,12 @@
         where fruit_id = #{fruitId}
     </update>
 
+    <select id="getFruitFromCartByFruitId" parameterType="fruit" resultMap="Fruit">
+        select * from fruit f, cart c, fruit_cart fc
+        where f.fruit_id = fc.fruit_id
+        and c.cart_id = fc.cart_id
+        and f.fruit_id = #{fruitId}
+        and c.cart_staff = #{staff.staffId}
+    </select>
+
 </mapper>

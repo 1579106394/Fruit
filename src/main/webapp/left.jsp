@@ -8,7 +8,7 @@
         <div id="side-nav">
             <ul id="nav">
                 <li class="list" current>
-                    <a href="./index.html">
+                    <a href="${pageContext.request.contextPath}/index.html">
                         <i class="iconfont">&#xe761;</i>
                         欢迎页面
                         <i class="iconfont nav_right">&#xe697;</i>
@@ -25,6 +25,12 @@
                             <a href="${pageContext.request.contextPath}/api/fruit/fruitList.html">
                                 <i class="iconfont">&#xe6a7;</i>
                                 水果列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="iconfont">&#xe6a7;</i>
+                                销售记录（没做）
                             </a>
                         </li>
 
@@ -48,14 +54,37 @@
                 <li class="list" >
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a3;</i>
-                        轮播管理
+                        用户管理
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu" style="display:none">
                         <li>
-                            <a href="./banner-list.html">
+                            <a href="${pageContext.request.contextPath}/api/staff/staffList.html">
                                 <i class="iconfont">&#xe6a7;</i>
-                                轮播列表
+                                店铺员工
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/api/staff/userList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                普通用户
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        订单管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu" style="display:none">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/api/cart/cartList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                购物车
                             </a>
                         </li>
                     </ul>
@@ -63,73 +92,31 @@
                 <li class="list" >
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a3;</i>
-                        管理员管理
+                        财务管理
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu" style="display:none">
+
                         <li>
-                            <a href="./banner-list.html">
+                            <a href="${pageContext.request.contextPath}/api/history/payList.html">
                                 <i class="iconfont">&#xe6a7;</i>
-                                轮播列表
+                                支出状况
                             </a>
                         </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/api/history/incomeList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                收入状况
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
                 <li class="list" >
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a3;</i>
-                        系统统计
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu" style="display:none">
-                        <li>
-                            <a href="./echarts1.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                拆线图
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./echarts2.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                柱状图
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./echarts3.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                地图
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./echarts4.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                饼图
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./echarts5.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                k线图
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./echarts6.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                仪表图
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://echarts.baidu.com/examples.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                更多案例
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="list" >
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe6a3;</i>
-                        系统设置
+                        评价管理
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu" style="display:none">

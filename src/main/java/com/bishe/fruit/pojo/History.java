@@ -18,7 +18,7 @@ public class History implements Serializable {
     private String historyId;
     private String historyCreatedTime;
     private Double historyPrice;
-    private Action action;
+    private String historyAction;
     private Integer historyFlag;
     private Integer historyDelete;
 
@@ -46,12 +46,12 @@ public class History implements Serializable {
         this.historyPrice = historyPrice;
     }
 
-    public Action getAction() {
-        return action;
+    public String getHistoryAction() {
+        return historyAction;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
+    public void setHistoryAction(String historyAction) {
+        this.historyAction = historyAction;
     }
 
     public Integer getHistoryFlag() {

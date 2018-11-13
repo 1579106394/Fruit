@@ -19,6 +19,18 @@
             <result column="staff_role" property="staffRole"/>
             <result column="staff_flag" property="staffFlag"/>
         </association>
+        <association property="courier" javaType="staff">
+            <id column="staff_id" property="staffId"/>
+            <result column="staff_name" property="staffName"/>
+            <result column="staff_account" property="staffAccount"/>
+            <result column="staff_password" property="staffPassword"/>
+            <result column="staff_birth" property="staffBirth"/>
+            <result column="staff_sex" property="staffSex"/>
+            <result column="staff_age" property="staffAge"/>
+            <result column="staff_telephone" property="staffTelephone"/>
+            <result column="staff_role" property="staffRole"/>
+            <result column="staff_flag" property="staffFlag"/>
+        </association>
         <association property="address" javaType="address">
             <id column="address_id" property="addressId" />
             <result column="address_name" property="addressName" />

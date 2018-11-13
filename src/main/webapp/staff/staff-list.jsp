@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>外送地址列表</title>
+    <title>员工列表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/xadmin.css">
@@ -20,7 +20,7 @@
     <script type="text/javascript">
         function list(p) {
             $("#currentPage").val(p);
-            $("#addressForm").submit();
+            $("#staffForm").submit();
         }
     </script>
 
@@ -39,15 +39,15 @@
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
 
-            <form id="addressForm" class="layui-form xbs layui-form-pane"
-                  action="${pageContext.request.contextPath}/api/address/addressList.html" method="post">
+            <form id="staffForm" class="layui-form xbs layui-form-pane"
+                  action="${pageContext.request.contextPath}/api/staff/staffList.html" method="post">
                 <input type="hidden" id="currentPage" name="currentPage" value="${page.currentPage}"/>
                 <div class="" style="text-align: center;">
                     <div class="layui-form-item" style="display: inline-block;">
-                        <label class="layui-form-label xbs768">地址</label>
+                        <label class="layui-form-label xbs768">员工姓名</label>
                         <div class="layui-input-inline xbs768">
-                            <input class="layui-input" name="params[addressName]" value="${page.params.addressName}"
-                                   placeholder="外送地址" id="LAY_demorange_s">
+                            <input class="layui-input" name="params[staffName]" value="${page.params.staffName}"
+                                   placeholder="员工姓名" id="LAY_demorange_s">
                         </div>
                         <div class="layui-input-inline" style="width:80px">
                             <button class="layui-btn" type="submit"><i
@@ -60,8 +60,8 @@
             <xblock>
                 <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
                 </button>
-                <a class="layui-btn" href="${pageContext.request.contextPath}/address/address-add.jsp"><i
-                        class="layui-icon">&#xe608;</i>添加外送地址
+                <a class="layui-btn" href="${pageContext.request.contextPath}/staff/staff-add.jsp"><i
+                        class="layui-icon">&#xe608;</i>添加
                 </a>
                 <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
             <table class="layui-table">
@@ -70,31 +70,67 @@
                     <th>
                     </th>
                     <th>编号</th>
-                    <th>地址</th>
+                    <th>姓名</th>
+                    <th>账号</th>
+                    <th>生日</th>
+                    <th>手机号</th>
+                    <th>工资</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>身份</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <form id="deleteForm" action="${pageContext.request.contextPath}/api/address/deleteAddress.html"
+                <form id="deleteForm" action="${pageContext.request.contextPath}/api/staff/deleteStaff.html"
                       method="post">
-                    <c:forEach items="${page.list}" var="address" varStatus="index">
+                    <c:forEach items="${page.list}" var="staff" varStatus="index">
 
                         <tr>
-                            <td><input type="checkbox" name="ids" value="${address.addressId}">
+                            <td><input type="checkbox" name="ids" value="${staff.staffId}">
                             </td>
                             <td>${index.index+1}</td>
-                            <td>${address.addressName}</td>
+                            <td>${staff.staffName}</td>
+                            <td>${staff.staffAccount}</td>
+                            <td>${staff.staffBirth}</td>
+                            <td>${staff.staffTelephone}</td>
+                            <td>${staff.salary.salaryPrice}</td>
+                            <td>
+                                <c:if test="${staff.staffSex == 1}">男</c:if>
+                                <c:if test="${staff.staffSex == 2}">女</c:if>
+                            </td>
+                            <td>${staff.staffAge}</td>
+                            <td>
+                                <c:if test="${staff.staffRole == 1}">员工</c:if>
+                                <c:if test="${staff.staffRole == 3}">管理员</c:if>
+                            </td>
 
                             <td class="td-manage">
 
-                                <a title="编辑" href="javascript:;" onclick="toEditAddress('${address.addressId}')"
+                                <a title="编辑" href="javascript:;" onclick="toEditStaff('${staff.staffId}')"
                                    class="ml-5" style="text-decoration:none">
                                     <i class="layui-icon">&#xe642;</i>
                                 </a>
 
-                                <a title="删除" href="javascript:;" onclick="deleteAddress('${address.addressId}')"
+                                <a title="删除" href="javascript:;" onclick="deleteStaff('${staff.staffId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe640;</i>
+                                </a>
+
+                                <a title="管理员切换" href="javascript:;"
+                                   onclick="editRole('${staff.staffId}', ${staff.staffRole})"
+                                   style="text-decoration:none">
+                                    <i class="layui-icon">&#xe608;</i>
+                                </a>
+
+                                <a title="分配外送地址" href="javascript:;" onclick="addAddress('${staff.staffId}')"
+                                   style="text-decoration:none">
+                                    <i class="layui-icon">&#xe66c;</i>
+                                </a>
+
+                                <a title="查看外送地址" href="javascript:;" onclick="getAddress(${staff.staffId})"
+                                   style="text-decoration:none">
+                                    <i class="layui-icon">&#xe615;</i>
                                 </a>
                             </td>
                         </tr>
@@ -152,7 +188,6 @@
                     </ul>
                     </span>
                     </ul>
-
                 </nav>
             </div>
         </div>
@@ -171,26 +206,71 @@
 <jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
-<script type="text/javascript">
+<script>
 
-    function toEditAddress(id) {
+    /*编辑*/
+    function toEditStaff(id) {
         layer.confirm('确认要编辑吗？', function (index) {
-            window.location.href = "${pageContext.request.contextPath}/api/address/toEdit" + id + ".html"
+            window.location.href = "${pageContext.request.contextPath}/api/staff/toEdit" + id + ".html"
         });
     }
 
-    function deleteAddress(id) {
+    /*删除*/
+    function deleteStaff(id) {
         layer.confirm('确认要删除吗？', function (index) {
-            window.location.href = "${pageContext.request.contextPath}/api/address/deleteAddress" + id + ".html"
+            window.location.href = "${pageContext.request.contextPath}/api/staff/deleteStaff" + id + ".html"
         });
     }
 
+    /*批量删除*/
     function delAll() {
         layer.confirm('确认要删除吗？', function (index) {
             $('#deleteForm').submit();
         });
     }
 
+    /*管理员身份切换*/
+    function editRole(id, role) {
+        if (role == 1) {
+            layer.confirm('确认要设为管理员吗？', function (index) {
+                window.location.href = "${pageContext.request.contextPath}/api/staff/editRole" + id + ".html"
+            });
+        } else {
+            layer.confirm('确认要取消管理员吗？', function (index) {
+                window.location.href = "${pageContext.request.contextPath}/api/staff/editRole" + id + ".html"
+            });
+        }
+    }
+
+    /*分配外送地址*/
+    function addAddress(id) {
+        layer.confirm('确认要给该员工分配外送地址吗？', function (index) {
+            window.location.href = "${pageContext.request.contextPath}/api/staff/toAddAddress" + id + ".html"
+        });
+    }
+
+    /*查看外送地址*/
+    function getAddress(id) {
+        var staffId = "{\"staffId\": \""+id+"\"}";
+        $.ajax({
+            url: "${pageContext.request.contextPath}/api/address/getAddressByStaff.action",
+            data : staffId,
+            contentType : "application/json;charset=UTF-8",
+            type : "post",
+            dataType : "json",
+            success: function(data) {
+                var name = "";
+                for(var i = 0; i < data.length; i++) {
+                    name += "  " + data[i].addressName;
+                }
+
+                layer.alert(name);
+            }
+
+        })
+    }
+
 </script>
+
 </body>
 </html>

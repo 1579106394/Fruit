@@ -1,6 +1,7 @@
 package com.bishe.fruit.pojo;
 
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * CREATE TABLE `staff` (
@@ -29,6 +30,9 @@ public class Staff implements Serializable {
     private Long staffTelephone;
     private Integer staffRole;
     private Integer staffFlag;
+
+    private Salary salary;
+    private List<Address> addressList = new ArrayList<>();
 
     public String getStaffId() {
         return staffId;
@@ -108,5 +112,21 @@ public class Staff implements Serializable {
 
     public void setStaffFlag(Integer staffFlag) {
         this.staffFlag = staffFlag;
+    }
+
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
     }
 }

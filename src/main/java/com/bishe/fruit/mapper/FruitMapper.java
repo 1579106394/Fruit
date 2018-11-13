@@ -24,4 +24,7 @@ public interface FruitMapper {
 
     // 编辑水果
     void editFruit(Fruit fruit);
+
+    // 从购物车中查询水果是否存在
+    Fruit getFruitFromCartByFruitId(Fruit fruit);
 }
