@@ -8,13 +8,14 @@
         <result column="history_price" property="historyPrice" />
         <result column="history_flag" property="historyFlag" />
         <result column="history_delete" property="historyDelete" />
+        <result column="history_action" property="historyAction" />
     </resultMap>
 
     <insert id="addHistory" parameterType="history">
         insert into history values
         (
           #{historyId}, #{historyCreatedTime}, #{historyPrice},
-          #{action.actionName}, #{historyFlag}, #{historyDelete}
+          #{historyAction}, #{historyFlag}, #{historyDelete}
         )
     </insert>
 

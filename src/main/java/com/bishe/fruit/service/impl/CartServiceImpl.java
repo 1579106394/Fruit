@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -48,7 +47,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Cart> getCartList(Staff staff) {
+    public Cart getCartList(Staff staff) {
         return cartMapper.getCartList(staff);
+    }
+
+    @Override
+    public void deleteFromCart(String fruitId, String cartId) {
+        cartMapper.deleteFromCart(fruitId, cartId);
     }
 }

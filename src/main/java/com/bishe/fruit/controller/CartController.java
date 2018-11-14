@@ -1,14 +1,18 @@
 package com.bishe.fruit.controller;
 
+import com.bishe.fruit.pojo.Address;
 import com.bishe.fruit.pojo.Cart;
 import com.bishe.fruit.pojo.Fruit;
 import com.bishe.fruit.pojo.Staff;
+import com.bishe.fruit.service.AddressService;
 import com.bishe.fruit.service.CartService;
 import com.bishe.fruit.service.FruitService;
 import com.bishe.fruit.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +29,9 @@ public class CartController {
 
     @Autowired
     private FruitService fruitService;
+
+    @Autowired
+    private AddressService addressService;
 
     /**
      * ajax加入购物车
@@ -50,15 +57,60 @@ public class CartController {
 
     }
 
+    /**
+     * 获取购物车中的水果
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping("cartList.html")
     public String cartList(Model model, HttpSession session) {
 
         Staff staff = (Staff) session.getAttribute("staff");
 
-        List<Cart> cartList = cartService.getCartList(staff);
+        Cart cart = cartService.getCartList(staff);
+
+        model.addAttribute("cart", cart);
 
         return "cart/cart-list";
     }
 
+    /**
+     * 根据id从购物车中移出水果
+     * @param fruitId
+     * @param cartId
+     * @param ids
+     * @return
+     */
+    @RequestMapping("deleteFromCart{cartId}/{fruitId}.html")
+    public String deleteFromCart(@PathVariable String fruitId, @PathVariable String cartId, String[] ids) {
+        if(StringUtils.isNotBlank(fruitId)) {
+            cartService.deleteFromCart(fruitId, cartId);
+        }else {
+            for (String id : ids) {
+                cartService.deleteFromCart(id, cartId);
+            }
+        }
+        return "redirect:/api/cart/cartList.html";
+    }
+
+    /**
+     * 跳转到提交订单页面
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping("toAddOrder.html")
+    public String toAddOrder(Model model, HttpSession session) {
+
+        Staff staff = (Staff) session.getAttribute("staff");
+        Cart cart = cartService.getCartList(staff);
+        model.addAttribute("cart", cart);
+
+        List<Address> addressList = addressService.getAllAddressList();
+        model.addAttribute("addressList", addressList);
+
+        return "cart/fruit-list";
+    }
 
 }

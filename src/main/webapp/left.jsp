@@ -27,13 +27,6 @@
                                 水果列表
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <i class="iconfont">&#xe6a7;</i>
-                                销售记录（没做）
-                            </a>
-                        </li>
-
                     </ul>
                 </li>
                 <li class="list" >
@@ -87,6 +80,12 @@
                                 购物车
                             </a>
                         </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/api/order/orderList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                订单列表
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="list" >
@@ -121,9 +120,9 @@
                     </a>
                     <ul class="sub-menu" style="display:none">
                         <li>
-                            <a href="./banner-list.html">
+                            <a href="${pageContext.request.contextPath}/api/comment/commentList.html">
                                 <i class="iconfont">&#xe6a7;</i>
-                                轮播列表
+                                评论列表
                             </a>
                         </li>
                     </ul>

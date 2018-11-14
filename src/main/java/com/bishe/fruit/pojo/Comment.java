@@ -7,8 +7,7 @@ import java.io.Serializable;
  *   `comment_id` varchar(36) NOT NULL,
  *   `comment_staff` varchar(36) NOT NULL COMMENT '评论用户',
  *   `comment_article` mediumtext NOT NULL COMMENT '评论内容',
- *   `comment_order` varchar(36) NOT NULL COMMENT '评论哪个订单',
- *   `comment_crearted_time` varchar(36) NOT NULL COMMENT '评论时间',
+ *   `comment_created_time` varchar(36) NOT NULL COMMENT '评论时间',
  *   `comment_flag` int(2) NOT NULL DEFAULT '1' COMMENT '1正常2删除',
  *   PRIMARY KEY (`comment_id`)
  * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18,7 +17,6 @@ public class Comment implements Serializable {
     private String commentId;
     private Staff staff;
     private String commentArticle;
-    private Order order;
     private String commentCreatedTime;
     private Integer commentFlag;
 
@@ -44,14 +42,6 @@ public class Comment implements Serializable {
 
     public void setCommentArticle(String commentArticle) {
         this.commentArticle = commentArticle;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public String getCommentCreatedTime() {

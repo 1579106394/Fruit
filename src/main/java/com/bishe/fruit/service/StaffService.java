@@ -1,7 +1,10 @@
 package com.bishe.fruit.service;
 
+import com.bishe.fruit.pojo.Address;
 import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.utils.Page;
+
+import java.util.List;
 
 public interface StaffService {
 
@@ -32,4 +35,6 @@ public interface StaffService {
     // 切换管理员身份
     void editStaffRoleById(String staffId);
 
+    // 根据派送地址分配派送员
+    List<Staff> getStaffListByAddress(Address address);
 }

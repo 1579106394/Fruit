@@ -68,6 +68,17 @@
         limit #{index}, #{currentCount}
     </select>
 
+    <select id="getStaffListByAddress" parameterType="address" resultMap="Staff">
+        select * from staff
+        left JOIN staff_address
+        on  staff_address.staff_id = staff.staff_id
+        LEFT JOIN address
+        on address.address_id = staff_address.address_id
+        where staff_flag = 1
+        and address.address_id = #{addressId}
+
+    </select>
+
     <select id="getStaffCount" parameterType="Page" resultType="Integer">
         select count(*) from staff left join salary
         on staff_id = salary_staff

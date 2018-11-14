@@ -1,5 +1,6 @@
 package com.bishe.fruit.mapper;
 
+import com.bishe.fruit.pojo.Address;
 import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.utils.Page;
 
@@ -36,4 +37,7 @@ public interface StaffMapper {
 
     // 获取所有员工(包括管理员)
     List<Staff> getAllStaff();
+
+    // 根据送货地址获取派送员
+    List<Staff> getStaffListByAddress(Address address);
 }

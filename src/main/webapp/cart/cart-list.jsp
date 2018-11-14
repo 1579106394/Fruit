@@ -40,7 +40,7 @@
             <!-- 右侧内容框架，更改从这里开始 -->
 
             <form id="fruitForm" class="layui-form xbs layui-form-pane"
-                  action="${pageContext.request.contextPath}/api/fruit/fruitList.html" method="post">
+                  action="${pageContext.request.contextPath}/api/cart/cartList.html" method="post">
                 <input type="hidden" id="currentPage" name="currentPage" value="${page.currentPage}"/>
                 <div class="" style="text-align: center;">
 
@@ -48,45 +48,29 @@
             </form>
 
             <xblock>
-                <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量移出
-                </button>
-                <a class="layui-btn" href="${pageContext.request.contextPath}/api/order/toAddOrder.html"><i
+                <a class="layui-btn" href="${pageContext.request.contextPath}/api/cart/toAddOrder.html"><i
                         class="layui-icon">&#xe608;</i>提交订单
                 </a>
-                <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
             <table class="layui-table">
                 <thead>
                 <tr>
-                    <th>
-                    </th>
                     <th>编号</th>
                     <th>水果名</th>
-                    <th>上架时间</th>
-                    <th>进货员工</th>
-                    <th>库存</th>
                     <th>单价</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <form id="deleteForm" action="${pageContext.request.contextPath}/api/fruit/deleteFruit.html"
-                      method="post">
-                    <c:forEach items="${page.list}" var="fruit" varStatus="index">
+                    <c:forEach items="${cart.fruitList}" var="fruit" varStatus="index">
 
                         <tr>
-                            <td><input type="checkbox" name="ids" value="${fruit.fruitId}">
-                            </td>
                             <td>${index.index+1}</td>
                             <td>${fruit.fruitName}</td>
-                            <td>${fruit.fruitCreatedTime}</td>
-                            <td>${fruit.staff.staffName}</td>
-                            <td>${fruit.fruitNum}
-                            </td>
                             <td>${fruit.fruitPrice}</td>
 
                             <td class="td-manage">
 
-                                <a title="移出购物车" href="javascript:;" onclick="deleteFruit('${fruit.fruitId}')"
+                                <a title="移出购物车" href="javascript:;" onclick="deleteFromCart('${fruit.fruitId}', '${cart.cartId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe640;</i>
                                 </a>
@@ -94,7 +78,6 @@
                             </td>
                         </tr>
                     </c:forEach>
-                </form>
                 </tbody>
             </table>
 
@@ -116,56 +99,13 @@
 <!-- 页面动态效果 -->
 <script>
 
-    /*进货*/
-    function addNum(id) {
-        layer.confirm('确认要进货吗？', function (index) {
-            window.location.href = "${pageContext.request.contextPath}/api/fruit/toAddNum" + id + ".html"
+    /*移出购物车*/
+    function deleteFromCart(fruitId, cartId) {
+        layer.confirm('确认要移出购物车吗？', function (index) {
+            window.location.href = "${pageContext.request.contextPath}/api/cart/deleteFromCart" + cartId + "/"+fruitId+".html"
         });
     }
 
-    /*编辑*/
-    function toEdit(id) {
-        layer.confirm('确认要编辑吗？', function (index) {
-            window.location.href = "${pageContext.request.contextPath}/api/fruit/toEdit" + id + ".html"
-        });
-    }
-
-    /*删除*/
-    function deleteFruit(id) {
-        layer.confirm('确认要删除吗？', function (index) {
-            window.location.href = "${pageContext.request.contextPath}/api/fruit/deleteFruit" + id + ".html"
-        });
-    }
-
-    /*批量删除*/
-    function delAll() {
-        layer.confirm('确认要删除吗？', function (index) {
-            $('#deleteForm').submit();
-        });
-    }
-
-    /*加入购物车*/
-    function addCart(fruitId) {
-        layer.confirm('确认要加入购物车吗？', function (index) {
-            var fruit = "{\"fruitId\": \""+fruitId+"\"}";
-            $.ajax({
-                url: "${pageContext.request.contextPath}/api/cart/addCart.action",
-                data : fruit,
-                contentType : "application/json;charset=UTF-8",
-                type : "post",
-                dataType : "json",
-                success: function(data) {
-
-                    if(data.status == 200) {
-                        layer.msg("成功加入购物车");
-                    }else {
-                        layer.msg("购物车已经存在，请勿重复添加");
-                    }
-                }
-
-            })
-        });
-    }
 </script>
 
 </body>

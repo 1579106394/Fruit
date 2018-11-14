@@ -51,10 +51,20 @@
     </insert>
 
     <select id="getCartList" parameterType="staff" resultMap="Cart">
-        select * from cart c,fruit f,fruit_cart fc
+        select
+        c.cart_id ,f.fruit_id, f.fruit_name, f.fruit_price,
+        fc.fruit_num
+        from cart c,fruit f,fruit_cart fc
         where c.cart_id = fc.cart_id
         and f.fruit_id = fc.fruit_id
         and c.cart_staff = #{staffId}
+        and c.cart_flag = 1
     </select>
+
+    <delete id="deleteFromCart">
+        delete from fruit_cart
+        where fruit_id = #{0}
+        and cart_id = #{1}
+    </delete>
 
 </mapper>

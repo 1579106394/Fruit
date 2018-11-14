@@ -3,7 +3,6 @@ package com.bishe.fruit.mapper;
 import com.bishe.fruit.pojo.Cart;
 import com.bishe.fruit.pojo.Staff;
 
-import java.util.List;
 import java.util.Map;
 
 public interface CartMapper {
@@ -18,5 +17,8 @@ public interface CartMapper {
     void addCart(Map<String,Object> fruitMap);
 
     // 查询购物车列表
-    List<Cart> getCartList(Staff staff);
+    Cart getCartList(Staff staff);
+
+    // 从购物车中移出水果
+    void deleteFromCart(String fruitId, String cartId);
 }

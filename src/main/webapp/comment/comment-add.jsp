@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>我的购物车</title>
+    <title>添加评论</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/xadmin.css">
@@ -15,11 +15,6 @@
     <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/xadmin.js"></script>
 
-    <style type="text/css">
-        .layui-form-select dl {
-            background-color: transparent;
-        }
-    </style>
 </head>
 <body>
 <!-- 顶部开始 -->
@@ -34,40 +29,24 @@
     <div class="page-content">
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
-            <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/api/order/addOrder.html"
+            <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/api/comment/addComment.html"
                   method="post">
-
-                <c:forEach items="${cart.fruitList}" var="fruit" varStatus="index">
-                    <div class="layui-form-item">
-                        <label for="${fruit.fruitId}" class="layui-form-label">
-                                ${fruit.fruitName}
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="hidden" name="fruitList[${index.index}].fruitId" value="${fruit.fruitId}"/>
-                            <input type="number" id="${fruit.fruitId}" value="${fruit.fruitNum}"
-                                   name="fruitList[${index.index}].fruitNum" required=""
-                                   autocomplete="off" class="layui-input" min="1">
-                        </div>
-
-                    </div>
-                </c:forEach>
-
                 <div class="layui-form-item">
-                    <label class="layui-form-label">外送地址</label>
+                    <label for="article" class="layui-form-label">
+                        评论内容
+                    </label>
                     <div class="layui-input-inline">
-                        <select name="address.addressId">
-                            <c:forEach items="${addressList}" var="add">
-                                <option value="${add.addressId}">${add.addressName}</option>
-                            </c:forEach>
-                        </select>
+                        <textarea name="commentArticle" id="article" required lay-verify="required"
+                                  placeholder="请输入" class="layui-textarea"></textarea>
                     </div>
+
                 </div>
 
 
                 <div class="layui-form-item">
                     </label>
                     <button class="layui-btn" type="submit">
-                        提交
+                        添加
                     </button>
                 </div>
             </form>

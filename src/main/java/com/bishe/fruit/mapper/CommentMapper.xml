@@ -19,12 +19,39 @@
             <result column="staff_role" property="staffRole"/>
             <result column="staff_flag" property="staffFlag"/>
         </association>
-        <association property="order" javaType="order">
-            <id column="order_id" property="orderId" />
-            <result column="order_created_time" property="orderCreatedTime" />
-            <result column="order_price" property="orderPrice" />
-            <result column="order_flag" property="orderFlag" />
-        </association>
     </resultMap>
+
+    <select id="getCommentList" parameterType="page" resultMap="Comment">
+        select * from comment c, staff s
+        where c.comment_flag = 1
+        and c.comment_staff = s.staff_id
+        order by comment_created_time desc
+        limit #{index}, #{currentCount}
+    </select>
+
+    <select id="getCommentCount" parameterType="page" resultType="Integer">
+        select count(*) from comment c, staff s
+        where c.comment_flag = 1
+        and c.comment_staff = s.staff_id
+    </select>
+
+    <insert id="addComment" parameterType="comment">
+        insert into comment
+        (
+          comment_id, comment_staff, comment_article,
+          comment_created_time, comment_flag
+        )
+         values
+        (
+          #{commentId}, #{staff.staffId}, #{commentArticle},
+          #{commentCreatedTime}, #{commentFlag}
+        )
+    </insert>
+
+    <update id="deleteCommentById">
+        update comment set
+        comment_flag = 2
+        where comment_id = #{value}
+    </update>
 
 </mapper>

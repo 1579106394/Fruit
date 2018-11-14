@@ -2,6 +2,7 @@ package com.bishe.fruit.service.impl;
 
 import com.bishe.fruit.mapper.SalaryMapper;
 import com.bishe.fruit.mapper.StaffMapper;
+import com.bishe.fruit.pojo.Address;
 import com.bishe.fruit.pojo.Salary;
 import com.bishe.fruit.pojo.Staff;
 import com.bishe.fruit.service.StaffService;
@@ -115,6 +116,11 @@ public class StaffServiceImpl implements StaffService {
     public void editStaffRoleById(String staffId) {
         Staff staff = staffMapper.getStaffById(staffId);
         staffMapper.editStaffRole(staff);
+    }
+
+    @Override
+    public List<Staff> getStaffListByAddress(Address address) {
+        return staffMapper.getStaffListByAddress(address);
     }
 
 
