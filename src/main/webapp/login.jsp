@@ -54,8 +54,14 @@
         <span style="color: red;">${error}</span>
         <div class="form-actions">
             <button class="btn btn-warning pull-right" type="submit">登录</button>
+            <button class="btn btn-warning pull-right" type="button" onclick="register();">去注册</button>
         </div>
     </form>
 </div>
 </body>
+<script>
+    function register() {
+        window.location.href='${pageContext.request.contextPath}/register.jsp'
+    }
+</script>
 </html>

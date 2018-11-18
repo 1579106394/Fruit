@@ -18,12 +18,12 @@
 </head>
 <body>
 <!-- 顶部开始 -->
-<jsp:include page="${pageContext.request.contextPath}/header.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <div class="wrapper">
     <!-- 左侧菜单开始 -->
-    <jsp:include page="${pageContext.request.contextPath}/left.jsp"></jsp:include>
+    <jsp:include page="/left.jsp"></jsp:include>
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
     <div class="page-content">
@@ -68,11 +68,11 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <jsp:include page="${pageContext.request.contextPath}/footer.jsp"></jsp:include>
+    <jsp:include page="/footer.jsp"></jsp:include>
 </div>
 <!-- 底部结束 -->
 <!-- 背景切换开始 -->
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
 

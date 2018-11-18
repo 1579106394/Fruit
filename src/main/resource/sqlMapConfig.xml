@@ -5,7 +5,7 @@
 <configuration>
     <!--设置别名-->
     <typeAliases>
-        <package name="com.bishe.fruit"/>
+        <package name="com.fruit"/>
     </typeAliases>
 
 </configuration>

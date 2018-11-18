@@ -88,6 +88,7 @@
         <span style="color: red;">${error}</span>
         <div class="form-actions">
             <button class="btn btn-warning pull-right" type="submit">注册</button>
+            <button class="btn btn-warning pull-right" type="button" onclick="login();">去登陆</button>
         </div>
     </form>
 </div>
@@ -101,8 +102,12 @@
         });
     });
 
+    function login() {
+        window.location.href='${pageContext.request.contextPath}/login.jsp'
+    }
+
 </script>
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 
 
 </body>

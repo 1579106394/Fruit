@@ -5,6 +5,6 @@
 
 <!-- 底部开始 -->
 <div class="footer">
-    <div class="copyright">本后台系统前端页面为layui</div>
+    <div class="copyright">本后台系统前端页面为layui，最终版权所有为苏果水果店</div>
 </div>
 <!-- 底部结束 -->

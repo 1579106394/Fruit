@@ -24,15 +24,29 @@
         }
     </script>
 
+    <style type="text/css">
+
+        .comment-article {
+            height: 50px;
+            width: 100%;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .th-article {
+            width: 545px;
+        }
+    </style>
+
 </head>
 <body>
 <!-- 顶部开始 -->
-<jsp:include page="${pageContext.request.contextPath}/header.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <div class="wrapper">
     <!-- 左侧菜单开始 -->
-    <jsp:include page="${pageContext.request.contextPath}/left.jsp"></jsp:include>
+    <jsp:include page="/left.jsp"></jsp:include>
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
     <div class="page-content">
@@ -46,7 +60,8 @@
                     <div class="layui-form-item" style="display: inline-block;">
                         <label class="layui-form-label xbs768">评论内容</label>
                         <div class="layui-input-inline xbs768">
-                            <input class="layui-input" name="params[commentArticle]" value="${page.params.commentArticle}"
+                            <input class="layui-input" name="params[commentArticle]"
+                                   value="${page.params.commentArticle}"
                                    placeholder="评论内容" id="LAY_demorange_s">
                         </div>
                         <div class="layui-input-inline" style="width:80px">
@@ -60,9 +75,11 @@
             <xblock>
                 <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
                 </button>
-                <a class="layui-btn" href="${pageContext.request.contextPath}/comment/comment-add.jsp"><i
-                        class="layui-icon">&#xe608;</i>添加
-                </a>
+                <c:if test="${sessionScope.staff.staffRole == 2}">
+                    <a class="layui-btn" href="${pageContext.request.contextPath}/comment/comment-add.jsp"><i
+                            class="layui-icon">&#xe608;</i>发表评论
+                    </a>
+                </c:if>
                 <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
             <table class="layui-table">
                 <thead>
@@ -72,7 +89,7 @@
                     <th>编号</th>
                     <th>评论用户</th>
                     <th>评论时间</th>
-                    <th>评论内容</th>
+                    <th class="th-article">评论内容</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -82,24 +99,31 @@
                     <c:forEach items="${page.list}" var="comment" varStatus="index">
 
                         <tr>
-                            <td><input type="checkbox" name="ids" value="${staff.staffId}">
+                            <td class="comment-checkbox"><input type="checkbox" name="ids" value="${comment.commentId}">
                             </td>
-                            <td>${index.index+1}</td>
-                            <td>${comment.staff.staffName}</td>
-                            <td>${comment.commentCreatedTime}</td>
-                            <td>${comment.commentArticle}</td>
+                            <td class="comment-id">${index.index+1}</td>
+                            <td class="comment-name">${comment.staff.staffName}</td>
+                            <td class="comment-time">${comment.commentCreatedTime}</td>
+                            <td class="comment-article">${comment.commentArticle}</td>
 
-                            <td class="td-manage">
-
-                                <a title="编辑" href="javascript:;" onclick="toEditComment('${staff.staffId}')"
-                                   class="ml-5" style="text-decoration:none">
-                                    <i class="layui-icon">&#xe642;</i>
-                                </a>
-
-                                <a title="删除" href="javascript:;" onclick="deleteComment('${staff.staffId}')"
+                            <td class="td-manage comment-edit">
+                                <c:if test="${sessionScope.staff.staffRole == 2}">
+                                    <a title="编辑" href="javascript:;" onclick="toEditComment('${comment.commentId}')"
+                                       class="ml-5" style="text-decoration:none">
+                                        <i class="layui-icon">&#xe642;</i>
+                                    </a>
+                                </c:if>
+                                <a title="删除" href="javascript:;" onclick="deleteComment('${comment.commentId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe640;</i>
                                 </a>
+
+                                <a title="查看评论内容" href="javascript:;"
+                                   onclick="getCommentArticle('${comment.commentId}')"
+                                   style="text-decoration:none">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </a>
+
                             </td>
                         </tr>
                     </c:forEach>
@@ -167,11 +191,11 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <jsp:include page="${pageContext.request.contextPath}/footer.jsp"></jsp:include>
+    <jsp:include page="/footer.jsp"></jsp:include>
 </div>
 <!-- 底部结束 -->
 <!-- 背景切换开始 -->
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
 <script>
@@ -197,6 +221,24 @@
         });
     }
 
+    /*查看评论内容*/
+    function getCommentArticle(id) {
+        var data = "{\"commentId\": \"" + id + "\"}";
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/api/comment/readComment.action',
+            data: data,
+            type: 'post',
+            contentType : "application/json;charset=UTF-8",
+            dataType: 'json',
+            success: function (data) {
+                layer.alert(data.data.commentArticle, {
+                    area: '600px'
+                })
+            }
+        })
+
+    }
 </script>
 
 </body>

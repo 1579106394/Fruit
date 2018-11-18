@@ -9,6 +9,15 @@
         background-color: rgba(0, 0, 0, 0.25);
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
+    .layui-nav {
+        background-color: transparent;
+    }
+    .layui-nav-child {
+        background-color: transparent;
+    }
+    .layui-nav .layui-nav-child a {
+        color: #fff;
+    }
 </style>
 <!-- 顶部开始 -->
 <div class="container">

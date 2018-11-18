@@ -27,12 +27,12 @@
 </head>
 <body>
 <!-- 顶部开始 -->
-<jsp:include page="${pageContext.request.contextPath}/header.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <div class="wrapper">
     <!-- 左侧菜单开始 -->
-    <jsp:include page="${pageContext.request.contextPath}/left.jsp"></jsp:include>
+    <jsp:include page="/left.jsp"></jsp:include>
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
     <div class="page-content">
@@ -58,11 +58,13 @@
             </form>
 
             <xblock>
-                <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
-                </button>
-                <a class="layui-btn" href="${pageContext.request.contextPath}/staff/staff-add.jsp"><i
-                        class="layui-icon">&#xe608;</i>添加
-                </a>
+                <c:if test="${sessionScope.staff.staffRole == 3}">
+                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+                    </button>
+                    <a class="layui-btn" href="${pageContext.request.contextPath}/staff/staff-add.jsp"><i
+                            class="layui-icon">&#xe608;</i>添加
+                    </a>
+                </c:if>
                 <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
             <table class="layui-table">
                 <thead>
@@ -74,7 +76,9 @@
                     <th>账号</th>
                     <th>生日</th>
                     <th>手机号</th>
-                    <th>工资</th>
+                    <c:if test="${sessionScope.staff.staffRole == 3}">
+                        <th>工资</th>
+                    </c:if>
                     <th>性别</th>
                     <th>年龄</th>
                     <th>身份</th>
@@ -94,7 +98,9 @@
                             <td>${staff.staffAccount}</td>
                             <td>${staff.staffBirth}</td>
                             <td>${staff.staffTelephone}</td>
-                            <td>${staff.salary.salaryPrice}</td>
+                            <c:if test="${sessionScope.staff.staffRole == 3}">
+                                <td>${staff.salary.salaryPrice}</td>
+                            </c:if>
                             <td>
                                 <c:if test="${staff.staffSex == 1}">男</c:if>
                                 <c:if test="${staff.staffSex == 2}">女</c:if>
@@ -106,32 +112,33 @@
                             </td>
 
                             <td class="td-manage">
+                                <c:if test="${sessionScope.staff.staffRole == 3}">
+                                    <a title="编辑" href="javascript:;" onclick="toEditStaff('${staff.staffId}')"
+                                       class="ml-5" style="text-decoration:none">
+                                        <i class="layui-icon">&#xe642;</i>
+                                    </a>
 
-                                <a title="编辑" href="javascript:;" onclick="toEditStaff('${staff.staffId}')"
-                                   class="ml-5" style="text-decoration:none">
-                                    <i class="layui-icon">&#xe642;</i>
-                                </a>
+                                    <a title="删除" href="javascript:;" onclick="deleteStaff('${staff.staffId}')"
+                                       style="text-decoration:none">
+                                        <i class="layui-icon">&#xe640;</i>
+                                    </a>
 
-                                <a title="删除" href="javascript:;" onclick="deleteStaff('${staff.staffId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe640;</i>
-                                </a>
+                                    <a title="管理员切换" href="javascript:;"
+                                       onclick="editRole('${staff.staffId}', ${staff.staffRole})"
+                                       style="text-decoration:none">
+                                        <i class="layui-icon">&#xe608;</i>
+                                    </a>
 
-                                <a title="管理员切换" href="javascript:;"
-                                   onclick="editRole('${staff.staffId}', ${staff.staffRole})"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe608;</i>
-                                </a>
-
-                                <a title="分配外送地址" href="javascript:;" onclick="addAddress('${staff.staffId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe66c;</i>
-                                </a>
-
-                                <a title="查看外送地址" href="javascript:;" onclick="getAddress(${staff.staffId})"
+                                    <a title="分配外送地址" href="javascript:;" onclick="addAddress('${staff.staffId}')"
+                                       style="text-decoration:none">
+                                        <i class="layui-icon">&#xe66c;</i>
+                                    </a>
+                                </c:if>
+                                <a title="查看外送地址" href="javascript:;" onclick="getAddress('${staff.staffId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe615;</i>
                                 </a>
+
                             </td>
                         </tr>
                     </c:forEach>
@@ -199,11 +206,11 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <jsp:include page="${pageContext.request.contextPath}/footer.jsp"></jsp:include>
+    <jsp:include page="/footer.jsp"></jsp:include>
 </div>
 <!-- 底部结束 -->
 <!-- 背景切换开始 -->
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
 <script>
@@ -251,16 +258,17 @@
 
     /*查看外送地址*/
     function getAddress(id) {
-        var staffId = "{\"staffId\": \""+id+"\"}";
+        var staffId = "{\"staffId\": \"" + id + "\"}";
         $.ajax({
             url: "${pageContext.request.contextPath}/api/address/getAddressByStaff.action",
-            data : staffId,
-            contentType : "application/json;charset=UTF-8",
-            type : "post",
-            dataType : "json",
-            success: function(data) {
+            data: staffId,
+            contentType: "application/json;charset=UTF-8",
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+                var data = result.data;
                 var name = "";
-                for(var i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     name += "  " + data[i].addressName;
                 }
 

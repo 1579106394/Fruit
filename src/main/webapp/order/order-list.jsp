@@ -27,12 +27,12 @@
 </head>
 <body>
 <!-- 顶部开始 -->
-<jsp:include page="${pageContext.request.contextPath}/header.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <div class="wrapper">
     <!-- 左侧菜单开始 -->
-    <jsp:include page="${pageContext.request.contextPath}/left.jsp"></jsp:include>
+    <jsp:include page="/left.jsp"></jsp:include>
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
     <div class="page-content">
@@ -96,33 +96,40 @@
 
                             <td class="td-manage">
 
-
                                 <a title="删除" href="javascript:;" onclick="deleteOrder('${order.orderId}')"
                                    style="text-decoration:none">
                                     <i class="layui-icon">&#xe640;</i>
                                 </a>
 
-                                <a title="分配派送员" href="javascript:;" onclick="assignStaff('${order.orderId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe66f;</i>
-                                </a>
+                                <c:if test="${sessionScope.staff.staffRole == 2}">
+                                    <c:if test="${order.orderFlag == 1}">
+                                        <a title="下单" href="javascript:;" onclick="placeOrder('${order.orderId}')"
+                                           style="text-decoration:none">
+                                            <i class="layui-icon">&#xe659;</i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${order.orderFlag == 4}">
+                                        <a title="确定收货" href="javascript:;" onclick="collect('${order.orderId}')"
+                                           style="text-decoration:none">
+                                            <i class="layui-icon">&#xe657;</i>
+                                        </a>
+                                    </c:if>
+                                </c:if>
 
-                                <a title="下单" href="javascript:;" onclick="placeOrder('${order.orderId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe659;</i>
-                                </a>
-
-                                <a title="发货" href="javascript:;" onclick="deliver('${order.orderId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe609;</i>
-                                </a>
-
-                                <a title="确定收货" href="javascript:;" onclick="collect('${order.orderId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe657;</i>
-                                </a>
-
-
+                                <c:if test="${sessionScope.staff.staffRole == 3}">
+                                    <c:if test="${order.courier == null}">
+                                        <a title="分配派送员" href="javascript:;" onclick="assignStaff('${order.orderId}')"
+                                           style="text-decoration:none">
+                                            <i class="layui-icon">&#xe66f;</i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${order.orderFlag == 3}">
+                                        <a title="发货" href="javascript:;" onclick="deliver('${order.orderId}')"
+                                           style="text-decoration:none">
+                                            <i class="layui-icon">&#xe609;</i>
+                                        </a>
+                                    </c:if>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -190,11 +197,11 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <jsp:include page="${pageContext.request.contextPath}/footer.jsp"></jsp:include>
+    <jsp:include page="/footer.jsp"></jsp:include>
 </div>
 <!-- 底部结束 -->
 <!-- 背景切换开始 -->
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
 <script>

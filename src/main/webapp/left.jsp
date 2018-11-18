@@ -3,48 +3,57 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-    <!-- 左侧菜单开始 -->
-    <div class="left-nav">
-        <div id="side-nav">
-            <ul id="nav">
-                <li class="list" current>
-                    <a href="${pageContext.request.contextPath}/index.html">
-                        <i class="iconfont">&#xe761;</i>
-                        欢迎页面
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                </li>
+<!-- 左侧菜单开始 -->
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+            <li class="list" current>
+                <a href="${pageContext.request.contextPath}/index.html">
+                    <i class="iconfont">&#xe761;</i>
+                    欢迎页面
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+            </li>
+            <li class="list">
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe70b;</i>
+                    水果管理
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/api/fruit/fruitList.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            水果列表
+                        </a>
+                    </li>
+                    <c:if test="${sessionScope.staff.staffRole != 2}">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/api/sale/saleList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                销售记录
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </li>
+            <li class="list">
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6a3;</i>
+                    外送管理
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/api/address/addressList.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            外送列表
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <c:if test="${sessionScope.staff.staffRole != 2}">
                 <li class="list">
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe70b;</i>
-                        水果管理
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="${pageContext.request.contextPath}/api/fruit/fruitList.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                水果列表
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="list" >
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe6a3;</i>
-                        外送管理
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="${pageContext.request.contextPath}/api/address/addressList.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                外送列表
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="list" >
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a3;</i>
                         用户管理
@@ -67,28 +76,32 @@
 
                     </ul>
                 </li>
-                <li class="list" >
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe6a3;</i>
-                        订单管理
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu" style="display:none">
+            </c:if>
+            <li class="list">
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6a3;</i>
+                    订单管理
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu" style="display:none">
+                    <c:if test="${sessionScope.staff.staffRole == 2}">
                         <li>
                             <a href="${pageContext.request.contextPath}/api/cart/cartList.html">
                                 <i class="iconfont">&#xe6a7;</i>
                                 购物车
                             </a>
                         </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}/api/order/orderList.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                订单列表
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="list" >
+                    </c:if>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/api/order/orderList.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            订单列表
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <c:if test="${sessionScope.staff.staffRole == 3}">
+                <li class="list">
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a3;</i>
                         财务管理
@@ -112,22 +125,23 @@
 
                     </ul>
                 </li>
-                <li class="list" >
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe6a3;</i>
-                        评价管理
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu" style="display:none">
-                        <li>
-                            <a href="${pageContext.request.contextPath}/api/comment/commentList.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                评论列表
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+            </c:if>
+            <li class="list">
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6a3;</i>
+                    评价管理
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu" style="display:none">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/api/comment/commentList.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            评论列表
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    <!-- 左侧菜单结束 -->
+</div>
+<!-- 左侧菜单结束 -->

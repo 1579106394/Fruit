@@ -28,7 +28,7 @@
     <!--mybatis动态代理开发：扫描-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--基本包-->
-        <property name="basePackage" value="com.bishe.fruit.mapper"/>
+        <property name="basePackage" value="com.fruit.mapper"/>
     </bean>
 
     <!--注解事务-->

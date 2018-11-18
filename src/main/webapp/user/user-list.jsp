@@ -27,12 +27,12 @@
 </head>
 <body>
 <!-- 顶部开始 -->
-<jsp:include page="${pageContext.request.contextPath}/header.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <div class="wrapper">
     <!-- 左侧菜单开始 -->
-    <jsp:include page="${pageContext.request.contextPath}/left.jsp"></jsp:include>
+    <jsp:include page="/left.jsp"></jsp:include>
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
     <div class="page-content">
@@ -58,8 +58,10 @@
             </form>
 
             <xblock>
-                <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
-                </button>
+                <c:if test="${sessionScope.staff.staffRole == 3}">
+                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+                    </button>
+                </c:if>
                 <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
             <table class="layui-table">
                 <thead>
@@ -73,7 +75,9 @@
                     <th>手机号</th>
                     <th>性别</th>
                     <th>年龄</th>
-                    <th>操作</th>
+                    <c:if test="${sessionScope.staff.staffRole == 3}">
+                        <th>操作</th>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -94,15 +98,16 @@
                                 <c:if test="${staff.staffSex == 2}">女</c:if>
                             </td>
                             <td>${staff.staffAge}</td>
+                            <c:if test="${sessionScope.staff.staffRole == 3}">
+                                <td class="td-manage">
 
-                            <td class="td-manage">
+                                    <a title="删除" href="javascript:;" onclick="deleteUser('${staff.staffId}')"
+                                       style="text-decoration:none">
+                                        <i class="layui-icon">&#xe640;</i>
+                                    </a>
 
-                                <a title="删除" href="javascript:;" onclick="deleteUser('${staff.staffId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe640;</i>
-                                </a>
-
-                            </td>
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </form>
@@ -169,11 +174,11 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <jsp:include page="${pageContext.request.contextPath}/footer.jsp"></jsp:include>
+    <jsp:include page="/footer.jsp"></jsp:include>
 </div>
 <!-- 底部结束 -->
 <!-- 背景切换开始 -->
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
 <script>

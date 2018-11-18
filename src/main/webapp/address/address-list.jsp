@@ -27,12 +27,12 @@
 </head>
 <body>
 <!-- 顶部开始 -->
-<jsp:include page="${pageContext.request.contextPath}/header.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <div class="wrapper">
     <!-- 左侧菜单开始 -->
-    <jsp:include page="${pageContext.request.contextPath}/left.jsp"></jsp:include>
+    <jsp:include page="/left.jsp"></jsp:include>
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
     <div class="page-content">
@@ -58,8 +58,11 @@
             </form>
 
             <xblock>
-                <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
-                </button>
+                <c:if test="${sessionScope.staff.staffRole != 2}">
+                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+                    </button>
+                </c:if>
+
                 <a class="layui-btn" href="${pageContext.request.contextPath}/address/address-add.jsp"><i
                         class="layui-icon">&#xe608;</i>添加外送地址
                 </a>
@@ -71,7 +74,9 @@
                     </th>
                     <th>编号</th>
                     <th>地址</th>
-                    <th>操作</th>
+                    <c:if test="${sessionScope.staff.staffRole != 2}">
+                        <th>操作</th>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,19 +89,20 @@
                             </td>
                             <td>${index.index+1}</td>
                             <td>${address.addressName}</td>
+                            <c:if test="${sessionScope.staff.staffRole != 2}">
+                                <td class="td-manage">
 
-                            <td class="td-manage">
+                                    <a title="编辑" href="javascript:;" onclick="toEditAddress('${address.addressId}')"
+                                       class="ml-5" style="text-decoration:none">
+                                        <i class="layui-icon">&#xe642;</i>
+                                    </a>
 
-                                <a title="编辑" href="javascript:;" onclick="toEditAddress('${address.addressId}')"
-                                   class="ml-5" style="text-decoration:none">
-                                    <i class="layui-icon">&#xe642;</i>
-                                </a>
-
-                                <a title="删除" href="javascript:;" onclick="deleteAddress('${address.addressId}')"
-                                   style="text-decoration:none">
-                                    <i class="layui-icon">&#xe640;</i>
-                                </a>
-                            </td>
+                                    <a title="删除" href="javascript:;" onclick="deleteAddress('${address.addressId}')"
+                                       style="text-decoration:none">
+                                        <i class="layui-icon">&#xe640;</i>
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </form>
@@ -164,11 +170,11 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <jsp:include page="${pageContext.request.contextPath}/footer.jsp"></jsp:include>
+    <jsp:include page="/footer.jsp"></jsp:include>
 </div>
 <!-- 底部结束 -->
 <!-- 背景切换开始 -->
-<jsp:include page="${pageContext.request.contextPath}/bg.jsp"></jsp:include>
+<jsp:include page="/bg.jsp"></jsp:include>
 <!-- 背景切换结束 -->
 <!-- 页面动态效果 -->
 <script type="text/javascript">

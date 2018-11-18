@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <!--扫描controller和service层-->
-    <context:component-scan base-package="com.bishe.fruit"/>
+    <context:component-scan base-package="com.fruit"/>
 
     <!--开启注解驱动-->
     <mvc:annotation-driven/>
@@ -27,13 +27,12 @@
     </bean>
 
     <mvc:interceptors>
-        <!--配置跨域拦截器-->
+        <!--配置登录拦截器-->
         <mvc:interceptor>
             <!--拦截所有-->
             <mvc:mapping path="/**"/>
-            <bean class="com.bishe.fruit.interceptor.LoginInterceptor"/>
+            <bean class="com.fruit.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-
     </mvc:interceptors>
 
     <!-- 视图解析器 -->
