@@ -38,6 +38,13 @@
 
     <!--开启注解事务-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
+    <!-- 连接redis单机版 -->
+     <bean id="jedisClientPool" class="com.fruit.utils.JedisClientPool">
+        <property name="jedisPool" ref="jedisPool"></property>
+    </bean>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="host" value="127.0.0.1"></constructor-arg>
+        <constructor-arg name="port" value="6379"></constructor-arg>
+    </bean>
 
 </beans>

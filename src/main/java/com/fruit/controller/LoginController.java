@@ -2,6 +2,8 @@ package com.fruit.controller;
 
 import com.fruit.pojo.Staff;
 import com.fruit.service.StaffService;
+import com.fruit.utils.JedisClient;
+import com.fruit.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ public class LoginController {
 
     @Autowired
     private StaffService staffService;
+
+    @Autowired
+    private JedisClient jedisClient;
 
     /**
      * 注册
@@ -82,6 +87,7 @@ public class LoginController {
         }
 
         session.setAttribute("staff", s);
+        jedisClient.set("staff", JsonUtils.objectToJson(s));
 
 
         return "redirect:/index.html";

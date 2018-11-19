@@ -4,9 +4,7 @@ package com.fruit.service.impl;
 import com.fruit.mapper.*;
 import com.fruit.pojo.*;
 import com.fruit.service.OrderService;
-import com.fruit.utils.DateUtils;
-import com.fruit.utils.HistoryUtils;
-import com.fruit.utils.Page;
+import com.fruit.utils.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +36,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private SaleMapper saleMapper;
+
+    @Autowired
+    private LogMapper logMapper;
+
+    @Autowired
+    private JedisClient jedisClient;
 
     @Override
     public void addOrder(Order order) {
@@ -71,6 +75,12 @@ public class OrderServiceImpl implements OrderService {
         for (Fruit fruit : fruitList) {
             cartMapper.deleteFromCart(fruit.getFruitId(), cart.getCartId());
         }
+
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "添加了订单";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
     }
 
     @Override
@@ -109,16 +119,34 @@ public class OrderServiceImpl implements OrderService {
         Integer totalPage = (int) Math.ceil(totalCount * 1.0 / currentCount);
         p.setTotalPage(totalPage);
 
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "查看了订单列表";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         return p;
     }
 
     @Override
     public void deleteOrderById(String orderId) {
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "删除了ID为" + orderId + "的订单";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         orderMapper.deleteOrderById(orderId);
     }
 
     @Override
     public void placeOrderById(String orderId) {
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "将ID为" + orderId + "的订单下单";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         orderMapper.placeOrderById(orderId);
     }
 
@@ -129,11 +157,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addCourier(Order order) {
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "给订单" + order.getOrderId() + "分配了配送员，配送员是" + order.getCourier().getStaffName();
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         orderMapper.addCourier(order);
     }
 
     @Override
     public void deliver(String orderId) {
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "将ID 为" + orderId + "的订单发货";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         orderMapper.deliver(orderId);
     }
 
@@ -166,6 +206,12 @@ public class OrderServiceImpl implements OrderService {
 
             saleMapper.addSale(sale);
         }
+
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "将ID 为" + orderId + "的订单收货";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
 
     }
 }

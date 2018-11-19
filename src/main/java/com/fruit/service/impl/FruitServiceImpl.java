@@ -2,12 +2,13 @@ package com.fruit.service.impl;
 
 import com.fruit.mapper.FruitMapper;
 import com.fruit.mapper.HistoryMapper;
+import com.fruit.mapper.LogMapper;
 import com.fruit.pojo.Fruit;
 import com.fruit.pojo.History;
+import com.fruit.pojo.Log;
+import com.fruit.pojo.Staff;
 import com.fruit.service.FruitService;
-import com.fruit.utils.DateUtils;
-import com.fruit.utils.HistoryUtils;
-import com.fruit.utils.Page;
+import com.fruit.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,12 @@ public class FruitServiceImpl implements FruitService {
     @Autowired
     private HistoryMapper historyMapper;
 
+    @Autowired
+    private LogMapper logMapper;
+
+    @Autowired
+    private JedisClient jedisClient;
+
     @Override
     public void addFruit(Fruit fruit) {
         // 补全属性
@@ -38,8 +45,15 @@ public class FruitServiceImpl implements FruitService {
         Double totalPrice = fruit.getFruitPrice() * fruit.getFruitNum() * 0.8;
         historyMapper.pay(totalPrice);
 
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "购入了了水果" + fruit.getFruitName() + " " + fruit.getFruitNum() + "kg";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         History history = HistoryUtils.newHistory(totalPrice, "购入" + fruit.getFruitNum() + "kg" + fruit.getFruitName(), 1);
         historyMapper.addHistory(history);
+
 
     }
 
@@ -68,11 +82,26 @@ public class FruitServiceImpl implements FruitService {
         Integer totalPage = (int) Math.ceil(totalCount * 1.0 / currentCount);
         p.setTotalPage(totalPage);
 
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "查看了水果列表";
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
+
         return p;
     }
 
     @Override
     public void deleteFruitById(String fruitId) {
+        Fruit fruit = fruitMapper.getFruitById(fruitId);
+
+        String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+        String time = DateUtils.newDate();
+        String article = staffName + "在" + time + "删除了水果" + fruit.getFruitName();
+        Log log = LogUtils.newLog(time, article);
+        logMapper.addLog(log);
+
         fruitMapper.deleteFruitById(fruitId);
     }
 
@@ -94,7 +123,22 @@ public class FruitServiceImpl implements FruitService {
             History history = HistoryUtils.newHistory(totalPrice, "购入" + fruit.getFruitNum() + "kg" + fruit.getFruitName(), 1);
             historyMapper.addHistory(history);
 
+
+            String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+            String time = DateUtils.newDate();
+            String article = staffName + "在" + time + "购入了水果" + fruit.getFruitName() + fruit.getFruitNum() + "kg";
+            Log log = LogUtils.newLog(time, article);
+            logMapper.addLog(log);
             fruit.setFruitNum(f.getFruitNum() + fruit.getFruitNum());
+
+        } else {
+            String staffName = JsonUtils.jsonToPojo(jedisClient.get("staff"), Staff.class).getStaffName();
+            String time = DateUtils.newDate();
+            String article = staffName + "在" + time + "编辑了水果" + f.getFruitName() +
+                    "，水果名从" + f.getFruitName() + "改成了" + fruit.getFruitName() +
+                    "，单价从" + f.getFruitPrice() + "改成了" + fruit.getFruitPrice();
+            Log log = LogUtils.newLog(time, article);
+            logMapper.addLog(log);
         }
 
         fruitMapper.editFruit(fruit);

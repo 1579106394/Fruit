@@ -7,10 +7,10 @@ import java.util.UUID;
 public class LogUtils {
 
 
-    public static Log newLog(String article) {
+    public static Log newLog(String createdTime, String article) {
         Log log = new Log();
         log.setLogId(UUID.randomUUID().toString());
-        log.setLogCreatedTime(DateUtils.newDate());
+        log.setLogCreatedTime(createdTime);
         log.setLogArticle(article);
         log.setLogFlag(1);
 
