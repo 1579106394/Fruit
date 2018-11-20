@@ -57,12 +57,17 @@
                 </div>
             </form>
 
+            <div style="text-align: center;margin: auto;">
+                ${allSale}
+            </div>
+
             <xblock>
                 <c:if test="${sessionScope.staff.staffRole != 2}">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
                     </button>
                 </c:if>
-                <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
+                <span class="x-right" style="line-height:40px">总销量：${saleCount} kg</span>
+                <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span>&nbsp;&nbsp;</xblock>
             <table class="layui-table">
                 <thead>
                 <tr>

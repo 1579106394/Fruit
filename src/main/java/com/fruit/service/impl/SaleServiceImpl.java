@@ -71,4 +71,14 @@ public class SaleServiceImpl implements SaleService {
         saleMapper.deleteSaleById(saleId);
     }
 
+    @Override
+    public List<Sale> getAllSale() {
+        return saleMapper.getAllSale();
+    }
+
+    @Override
+    public Integer getSaleNum() {
+        return saleMapper.getSaleNum();
+    }
+
 }

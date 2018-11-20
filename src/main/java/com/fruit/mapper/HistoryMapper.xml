@@ -57,4 +57,18 @@
         where history_id = 'admin'
     </select>
 
+    <select id="getAllPay" resultType="Double">
+        select sum(history_price) from history
+        where history_flag = 1
+        and history_delete = 1
+        and history_id != 'admin'
+    </select>
+
+    <select id="getAllCollect" resultType="Double">
+        select sum(history_price) from history
+        where history_flag = 2
+        and history_delete = 1
+        and history_id != 'admin'
+    </select>
+
 </mapper>

@@ -52,7 +52,8 @@
             <xblock>
                 <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
                 </button>
-                <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span></xblock>
+                <span class="x-right" style="line-height:40px">总支出：${allPay} 元</span>
+                <span class="x-right" style="line-height:40px">共有数据：${page.totalCount} 条</span>&nbsp;&nbsp;</xblock>
             <table class="layui-table">
                 <thead>
                 <tr>

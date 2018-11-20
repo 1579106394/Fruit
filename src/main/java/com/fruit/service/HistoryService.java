@@ -16,4 +16,10 @@ public interface HistoryService {
 
     // 获取公司账户
     Double getAdminPrice();
+
+    // 获取所有的支出
+    Double getAllPay();
+
+    // 获取所有的收入
+    Double getAllCollect();
 }

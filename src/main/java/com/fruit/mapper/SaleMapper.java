@@ -18,4 +18,9 @@ public interface SaleMapper {
 
     // 根据id删除销售记录
     void deleteSaleById(String saleId);
+
+    // 查询所有水果的销量
+    List<Sale> getAllSale();
+
+    Integer getSaleNum();
 }

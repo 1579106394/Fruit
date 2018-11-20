@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("api/sale/")
 public class SaleController {
@@ -28,6 +30,17 @@ public class SaleController {
         Page<Sale> page = saleService.getSaleList(p);
 
         model.addAttribute("page", page);
+        Integer saleCount = saleService.getSaleNum();
+        model.addAttribute("saleCount",saleCount);
+
+
+        String allSale = "";
+        List<Sale> saleList = saleService.getAllSale();
+        for (Sale sale : saleList) {
+            allSale += sale.getFruit().getFruitName() + "的总销量为" + sale.getSaleNum() + "kg    ";
+        }
+        model.addAttribute("allSale", allSale);
+
         return "sale/sale-list";
     }
 

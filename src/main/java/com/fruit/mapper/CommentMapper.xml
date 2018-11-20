@@ -26,9 +26,6 @@
         where c.comment_flag = 1
         and c.comment_staff = s.staff_id
         <if test="params != null">
-            <if test="params.staff != null">
-                and c.comment_staff = #{params.staff.staffId}
-            </if>
             <if test="params.commentArticle != '' and params.commentArticle != null">
                 and c.comment_article like '%${params.commentArticle}%'
             </if>
@@ -49,9 +46,6 @@
         where c.comment_flag = 1
         and c.comment_staff = s.staff_id
         <if test="params != null">
-            <if test="params.staff != null">
-                and c.comment_staff = #{params.staff.staffId}
-            </if>
             <if test="params.commentArticle != '' and params.commentArticle != null">
                 and c.comment_article like '%${params.commentArticle}%'
             </if>

@@ -82,4 +82,14 @@ public class HistoryServiceImpl implements HistoryService {
         return historyMapper.getAdminPrice();
     }
 
+    @Override
+    public Double getAllPay() {
+        return historyMapper.getAllPay();
+    }
+
+    @Override
+    public Double getAllCollect() {
+        return historyMapper.getAllCollect();
+    }
+
 }

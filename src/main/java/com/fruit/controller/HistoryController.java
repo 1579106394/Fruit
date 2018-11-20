@@ -31,6 +31,9 @@ public class HistoryController {
 
         Double adminPrice = historyService.getAdminPrice();
         model.addAttribute("adminPrice", adminPrice);
+
+        Double allPay = historyService.getAllPay();
+        model.addAttribute("allPay", allPay);
         return "history/pay-list";
     }
 
@@ -48,6 +51,9 @@ public class HistoryController {
 
         Double adminPrice = historyService.getAdminPrice();
         model.addAttribute("adminPrice", adminPrice);
+
+        Double allCollect = historyService.getAllCollect();
+        model.addAttribute("allCollect", allCollect);
         return "history/income-list";
     }
 

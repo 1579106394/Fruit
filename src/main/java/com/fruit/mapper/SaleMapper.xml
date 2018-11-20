@@ -53,4 +53,22 @@
         where sale_id = #{value}
     </update>
 
+    <select id="getAllSale" resultMap="Sale">
+        SELECT
+            f.fruit_name fruit_name,
+            sum(s.sale_num) sale_num
+        FROM
+            sale s
+        INNER JOIN fruit f ON s.sale_fruit = f.fruit_id
+        GROUP BY
+            f.fruit_name
+    </select>
+
+    <select id="getSaleNum" resultType="Integer">
+    SELECT sum(sale_num) from sale
+    left join fruit on fruit_id = sale_fruit
+    where sale_flag = 1
+    </select>
+
+
 </mapper>

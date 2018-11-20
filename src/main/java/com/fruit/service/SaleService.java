@@ -10,4 +10,8 @@ public interface SaleService {
 
     // 根据id删除销售记录
     void deleteSaleById(String saleId);
+
+    java.util.List<Sale> getAllSale();
+
+    Integer getSaleNum();
 }

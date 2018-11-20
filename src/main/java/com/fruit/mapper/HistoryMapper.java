@@ -27,4 +27,10 @@ public interface HistoryMapper {
 
     // 获取公司账户
     Double getAdminPrice();
+
+    // 获取支出总金额
+    Double getAllPay();
+
+    // 获取收入总金额
+    Double getAllCollect();
 }
